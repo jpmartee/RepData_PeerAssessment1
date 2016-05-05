@@ -211,15 +211,14 @@ Let's checkout some differences between weekday and weekend activity patterns.
 
 ```r
 library(timeDate)
-actComplete <- mutate(actComplete, weekday = isWeekday(date), dayType = ifelse(weekday, 'Weekday', 'Weekend'))
 
-actComplete$weekday <- NULL
+actComplete <- mutate(actComplete, dayType = ifelse(isWeekday(date), 'Weekday', 'Weekend'))
 
 completeByWeekday <- aggregate(steps ~ interval * dayType, 
                                data = actComplete, FUN = mean)
 
 ggplot(data = completeByWeekday, aes(interval, steps)) +
-    geom_line() +
+    geom_line(color = 'steelblue') +
     facet_grid(dayType ~ .)
 ```
 
